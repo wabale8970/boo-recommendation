@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - Book Recommendation System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="text-center font-weight-light my-4">Contact Us</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5 mb-4">
+                            <img src="{{ url_for('static', filename='images/contact.png') }}" alt="Contact Us" class="img-fluid rounded mb-4" style="max-width: 250px;">
+                            
+                            <h4>Get in Touch</h4>
+                            <p>We'd love to hear from you! Whether you have a question about our features, need assistance, or want to provide feedback, our team is here to help.</p>
+                            
+                            <div class="mt-4">
+                                <h5>Contact Information</h5>
+                                <address>
+                                    <strong>Book Recommendation System</strong><br>
+                                    Shrirampur<br>
+                                    Shrirampur , Dist.A.Nagar<br><br>
+                                    <strong>Email:</strong> info@bookrecsystem.com<br>
+                                    <strong>Phone:</strong> (123) 456-7890
+                                </address>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h5>Office Hours</h5>
+                                <p>Monday - Friday: 9:00 AM - 5:00 PM<br>
+                                Saturday & Sunday: Closed</p>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <h4 class="mb-3">Send us a Message</h4>
+                            <form method="POST" action="{{ url_for('main.contact') }}">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" required />
+                                            <label for="name">Full Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" required />
+                                            <label for="email">Email Address</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="subject" name="subject" type="text" placeholder="Subject" required />
+                                    <label for="subject">Subject</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Enter your message here..." required></textarea>
+                                    <label for="message">Message</label>
+                                </div>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg" type="submit">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <h4 class="text-center mb-4">Frequently Asked Questions</h4>
+                            <div class="accordion" id="faqAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                            How does the book recommendation system work?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Our system analyzes your reading preferences and favorite books to suggest new titles you might enjoy. We use the Google Books API to access a vast library of books and provide personalized recommendations.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Is the service free to use?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Yes, our book recommendation system is completely free to use. Simply create an account to start discovering new books tailored to your interests.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Can I purchase books directly through your platform?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Currently, we don't offer direct book purchases. However, we provide links to popular online bookstores where you can buy the books you're interested in.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

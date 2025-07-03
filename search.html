@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Search Books - Book Recommendation System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <!-- Search Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Discover Books</h1>
+        </div>
+
+        <!-- Search Card -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h5 class="m-0 font-weight-bold">Search for Books</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('book.search_books') }}" method="POST">
+                    <!-- Search input -->
+                    <div class="search-container mb-4">
+                        <input type="text" name="search" class="form-control form-control-lg rounded-pill" placeholder="Enter book title, author, or keyword..." required>
+                        <button class="btn btn-primary rounded-pill px-4" type="submit">
+                            <i class="bi bi-search me-1"></i> Search
+                        </button>
+                    </div>
+                    
+                    <!-- Search Options -->
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="sort_by" class="form-label d-flex align-items-center">
+                                    <i class="bi bi-sort-alpha-down me-2 text-primary"></i>Sort by
+                                </label>
+                                <select name="sort_by" id="sort_by" class="form-select">
+                                    <option value="title">Title</option>
+                                    <option value="date">Published Date</option>
+                                    <option value="rating">Rating</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="checkbox" name="show_date" id="show_date">
+                                <label class="form-check-label" for="show_date">
+                                    <i class="bi bi-calendar3 me-2 text-primary"></i>Show Published Date
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="checkbox" name="show_rating" id="show_rating">
+                                <label class="form-check-label" for="show_rating">
+                                    <i class="bi bi-star-fill me-2 text-primary"></i>Show Rating
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Search Tips Card -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold">Search Tips</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-primary">
+                                <i class="bi bi-lightbulb-fill fs-3"></i>
+                            </div>
+                            <div>
+                                <h6>Book Title</h6>
+                                <p class="text-muted">Search for a specific book by entering its complete or partial title.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-primary">
+                                <i class="bi bi-person-fill fs-3"></i>
+                            </div>
+                            <div>
+                                <h6>Author Name</h6>
+                                <p class="text-muted">Find books by a specific author by typing their first or last name.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-primary">
+                                <i class="bi bi-tags-fill fs-3"></i>
+                            </div>
+                            <div>
+                                <h6>Genre or Topic</h6>
+                                <p class="text-muted">Discover books by searching for a genre, category, or topic of interest.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-primary">
+                                <i class="bi bi-filter-circle-fill fs-3"></i>
+                            </div>
+                            <div>
+                                <h6>Use Filters</h6>
+                                <p class="text-muted">Refine your search results using the sorting and display options provided.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update the hero-search-section div -->
+<div class="hero-search-section text-center mb-5" style="background-image: url('{{ url_for('static', filename='images/backgrounds/hero-bg.png') }}'); background-size: cover; background-position: center;">
+    <div class="hero-overlay">
+        <h1 class="display-4 fw-bold text-white mb-3">Discover Your Next Favorite Book</h1>
+        <p class="lead text-white mb-4">Search through millions of books to find your perfect read</p>
+        
+        <!-- Search form remains the same -->
+        <!-- ... -->
+    </div>
+</div>
+
+<!-- Update the category items with images -->
+<div class="col-6 col-md-3">
+    <a href="{{ url_for('book.search_books') }}?category=fiction" class="category-item d-flex flex-column align-items-center text-decoration-none">
+        <div class="category-icon rounded-circle mb-2">
+            <img src="{{ url_for('static', filename='images/categories/fiction.png') }}" class="rounded-circle" width="60" height="60" alt="Fiction">
+        </div>
+        <span>Fiction</span>
+    </a>
+</div>
+<div class="col-6 col-md-3">
+    <a href="{{ url_for('book.search_books') }}?category=science" class="category-item d-flex flex-column align-items-center text-decoration-none">
+        <div class="category-icon rounded-circle mb-2">
+            <img src="{{ url_for('static', filename='images/categories/science.png') }}" class="rounded-circle" width="60" height="60" alt="Science">
+        </div>
+        <span>Science</span>
+    </a>
+</div>
+<div class="col-6 col-md-3">
+    <a href="{{ url_for('book.search_books') }}?category=business" class="category-item d-flex flex-column align-items-center text-decoration-none">
+        <div class="category-icon rounded-circle mb-2">
+            <img src="{{ url_for('static', filename='images/categories/bussiness.png') }}" class="rounded-circle" width="60" height="60" alt="Business">
+        </div>
+        <span>Business</span>
+    </a>
+</div>
+<div class="col-6 col-md-3">
+    <a href="{{ url_for('book.search_books') }}?category=history" class="category-item d-flex flex-column align-items-center text-decoration-none">
+        <div class="category-icon rounded-circle mb-2">
+            <img src="{{ url_for('static', filename='images/categories/history.png') }}" class="rounded-circle" width="60" height="60" alt="History">
+        </div>
+        <span>History</span>
+    </a>
+</div>
+{% endblock %} 

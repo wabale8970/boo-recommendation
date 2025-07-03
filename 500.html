@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - Book Recommendation System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="text-center font-weight-light my-4">500 - Server Error</h3>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <img src="{{ url_for('static', filename='images/500.png') }}" alt="500 Error" class="img-fluid" style="max-width: 200px;">
+                    </div>
+                    <h3>Something went wrong!</h3>
+                    <p class="lead">
+                        We're experiencing some technical difficulties. Please try again later.
+                    </p>
+                    <a href="{{ url_for('main.index') }}" class="btn btn-primary mt-3">
+                        <i class="bi bi-house-door"></i> Go Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

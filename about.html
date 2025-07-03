@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}About - Book Recommendation System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="text-center font-weight-light my-4">About Us</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-4">
+                            <img src="{{ url_for('static', filename='images/about.png') }}" alt="About Us" class="img-fluid rounded" style="max-width: 250px;">
+                        </div>
+                        <div class="col-md-8">
+                            <h4>Our Mission</h4>
+                            <p class="lead">
+                                The Book Recommendation System aims to help readers discover their next favorite book by providing personalized recommendations based on preferences and reading history.
+                            </p>
+                            <p>
+                                In a world with millions of books, finding the right one can be overwhelming. Our platform uses advanced algorithms and user data to connect readers with books they'll love.
+                            </p>
+                            
+                            <h4 class="mt-4">How It Works</h4>
+                            <p>
+                                Our system leverages the Google Books API to provide comprehensive information about books, including titles, authors, publication dates, and cover images. Users can search for books, save favorites, and receive recommendations based on their reading preferences.
+                            </p>
+                            
+                            <h4 class="mt-4">Our Team</h4>
+                            <p>
+                                We are a team of passionate readers and developers who believe in the power of books to transform lives. Our goal is to create a user-friendly platform that makes discovering great books easy and enjoyable.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-5">
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Extensive Library</h5>
+                                    <p class="card-text">Access to millions of books through the Google Books API, ensuring you always have new options to explore.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Personalized Experience</h5>
+                                    <p class="card-text">Save your favorite books and get recommendations tailored to your unique reading preferences.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">User-Friendly Interface</h5>
+                                    <p class="card-text">Our intuitive design makes it easy to search, sort, and filter books to find exactly what you're looking for.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

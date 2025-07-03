@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Book Recommendation System{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <!-- Main container -->
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <!-- Sidebar -->
+            <div class="col-auto col-md-3 col-lg-2 px-0 sidebar">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-4 text-white min-vh-100">
+                    <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <img src="{{ url_for('static', filename='images/logo/small-logo.png') }}" alt="Logo" class="me-2" width="30" height="30">
+                        <span class="fs-5 d-none d-sm-inline fw-bold">BookRecommend</span>
+                    </a>
+                    <hr class="w-100">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100" id="menu">
+                        <li class="nav-item w-100">
+                            <a href="{{ url_for('main.index') }}" class="nav-link align-middle px-0">
+                                <i class="fs-5 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                            </a>
+                        </li>
+                        
+                        {% if current_user.is_authenticated %}
+                        <li class="w-100">
+                            <a href="{{ url_for('book.books') }}" class="nav-link px-0 align-middle">
+                                <i class="fs-5 bi-search"></i> <span class="ms-1 d-none d-sm-inline">Search Books</span>
+                            </a>
+                        </li>
+                        <li class="w-100">
+                            <a href="{{ url_for('book.favorites') }}" class="nav-link px-0 align-middle">
+                                <i class="fs-5 bi-heart"></i> <span class="ms-1 d-none d-sm-inline">My Favorites</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        <li class="w-100">
+                            <a href="{{ url_for('main.about') }}" class="nav-link px-0 align-middle">
+                                <i class="fs-5 bi-info-circle"></i> <span class="ms-1 d-none d-sm-inline">About Us</span>
+                            </a>
+                        </li>
+                        <li class="w-100">
+                            <a href="{{ url_for('main.contact') }}" class="nav-link px-0 align-middle">
+                                <i class="fs-5 bi-envelope"></i> <span class="ms-1 d-none d-sm-inline">Contact</span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <hr class="w-100">
+                    
+                    <div class="dropdown pb-4 w-100">
+                        {% if current_user.is_authenticated %}
+                            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle w-100" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://ui-avatars.com/api/?name={{ current_user.username }}&background=random" alt="User" width="30" height="30" class="rounded-circle me-2">
+                                <span class="d-none d-sm-inline mx-1">{{ current_user.username }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sign out</a></li>
+                            </ul>
+                        {% else %}
+                            <div class="d-grid gap-2 px-2">
+                                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-sm">
+                                    <i class="bi bi-box-arrow-in-right"></i> Login
+                                </a>
+                                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-person-plus"></i> Register
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main content -->
+            <div class="col py-3">
+                <!-- Top navbar for mobile -->
+                <nav class="navbar navbar-expand-lg d-lg-none mb-4 bg-light rounded shadow-sm">
+                    <div class="container-fluid">
+                        <a class="navbar-brand fw-bold text-primary" href="{{ url_for('main.index') }}">
+                            <img src="{{ url_for('static', filename='images/logo/logo-small.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
+                            BookRecommend
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+                                </li>
+                                {% if current_user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('book.books') }}">Search Books</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('book.favorites') }}">My Favorites</a>
+                                </li>
+                                {% endif %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('main.about') }}">About Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a>
+                                </li>
+                            </ul>
+                            <div class="d-flex">
+                                {% if current_user.is_authenticated %}
+                                <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger btn-sm">Logout</a>
+                                {% else %}
+                                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary btn-sm me-2">Login</a>
+                                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm">Register</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                
+                <!-- Flash messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="container">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- Main content area -->
+                <div class="container">
+                    {% block content %}{% endblock %}
+                </div>
+                
+                <!-- Footer -->
+                <footer class="bg-light mt-5 py-3 text-center text-muted">
+                    <div class="container">
+                        <p class="mb-1">&copy; 2025 Book Recommendation System. All rights reserved. Made by Arpita Wabale</p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="#">Privacy</a></li>
+                            <li class="list-inline-item"><a href="#">Terms</a></li>
+                            <li class="list-inline-item"><a href="#">Support</a></li>
+                        </ul>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html> 

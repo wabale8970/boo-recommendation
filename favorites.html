@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}My Favorites - Book Recommendation System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <!-- Favorites Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">My Favorite Books</h1>
+            <a href="{{ url_for('book.books') }}" class="btn btn-primary rounded-pill">
+                <i class="bi bi-search"></i> Find More Books
+            </a>
+        </div>
+
+        <!-- Favorites List -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h5 class="m-0 font-weight-bold">My Collection</h5>
+                <span class="badge bg-primary rounded-pill">{{ books|length }} books</span>
+            </div>
+            <div class="card-body">
+                {% if books %}
+                    <div class="row">
+                        {% for book in books %}
+                            <div class="col-lg-6 mb-4">
+                                <div class="card book-card h-100 shadow-sm border-0 position-relative">
+                                    <div class="position-absolute top-0 end-0 m-2">
+                                        <form action="{{ url_for('book.remove_favorite', book_id=book.id) }}" method="POST" onsubmit="return confirmRemove(event, '{{ book.title }}');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle" title="Remove from favorites">
+                                                <i class="bi bi-x-lg"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="row g-0">
+                                        <div class="col-md-4 book-img-container">
+                                            {% if book.image_url %}
+                                                <img src="{{ book.image_url }}" class="img-fluid rounded-start favorite-book-image" alt="{{ book.title }}">
+                                            {% else %}
+                                                <div class="d-flex justify-content-center align-items-center h-100 bg-light">
+                                                    <i class="bi bi-book text-muted" style="font-size: 2rem;"></i>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body book-info">
+                                                <h5 class="card-title book-title">{{ book.title }}</h5>
+                                                <p class="card-text book-author">
+                                                    <i class="bi bi-person"></i> {{ book.author }}
+                                                </p>
+                                                
+                                                {% if book.published_date %}
+                                                    <p class="card-text">
+                                                        <small class="text-muted">
+                                                            <i class="bi bi-calendar3"></i> {{ book.published_date }}
+                                                        </small>
+                                                    </p>
+                                                {% endif %}
+                                                
+                                                {% if book.rating %}
+                                                    <p class="card-text book-rating">
+                                                        <small>
+                                                            <span class="me-1">Rating:</span>
+                                                            {% for i in range(1, 6) %}
+                                                                {% if i <= book.rating|float %}
+                                                                    <i class="bi bi-star-fill text-warning"></i>
+                                                                {% elif i <= (book.rating|float + 0.5) %}
+                                                                    <i class="bi bi-star-half text-warning"></i>
+                                                                {% else %}
+                                                                    <i class="bi bi-star text-warning"></i>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </small>
+                                                    </p>
+                                                {% endif %}
+                                                
+                                                <p class="card-text">
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-clock"></i> Added on: {{ book.created_at.strftime('%B %d, %Y') }}
+                                                    </small>
+                                                </p>
+                                                
+                                                <div class="mt-2">
+                                                    <a href="https://books.google.com/books?id={{ book.book_id }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill">
+                                                        <i class="bi bi-info-circle"></i> More Info
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="bi bi-heart text-danger" style="font-size: 4rem;"></i>
+                        <h4 class="mt-3">Your favorites list is empty</h4>
+                        <p class="text-muted">Start adding books to your favorites to see them here.</p>
+                        <a href="{{ url_for('book.books') }}" class="btn btn-primary rounded-pill mt-2">
+                            <i class="bi bi-search"></i> Find Books
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Reading Tips -->
+        {% if books %}
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold">Your Reading Journey</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="p-3 bg-light rounded">
+                            <i class="bi bi-book text-primary" style="font-size: 2rem;"></i>
+                            <h5 class="mt-2">{{ books|length }} Books</h5>
+                            <p class="text-muted">In your collection</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="p-3 bg-light rounded">
+                            <i class="bi bi-graph-up text-success" style="font-size: 2rem;"></i>
+                            <h5 class="mt-2">Keep Reading</h5>
+                            <p class="text-muted">Track your progress</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="p-3 bg-light rounded">
+                            <i class="bi bi-share text-info" style="font-size: 2rem;"></i>
+                            <h5 class="mt-2">Share</h5>
+                            <p class="text-muted">Recommend to friends</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    function confirmRemove(event, title) {
+        return confirm(`Are you sure you want to remove "${title}" from your favorites?`);
+    }
+</script>
+{% endblock %}
+{% endblock %} 
